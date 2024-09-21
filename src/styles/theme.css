@@ -1,0 +1,14 @@
+:root {
+    --font-body: "Noto Sans", sans-serif;
+    --font-heading: "Noto Sans, SemiBold", sans-serif;
+    --font-mono: "Fira Mono", monospace;
+    --font-ratio: 1.2;
+
+    --color-text: #eeecec;
+    --color-background: #170e0f;
+    --color-primary: #e89393;
+    --color-secondary: #8a1212;
+    --color-tertiary: #520b0b;
+    --color-accent: #f31717;
+    --color-shadow: 220deg 15% 70%
+}

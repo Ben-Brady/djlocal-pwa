@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.svg-inline--fa {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+:root {
+  font-family: var(--font-body);
+  color: var(--color-text);
+}
+
+body {
+  background: var(--color-background);
+
+  height: 100dvh;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*,
+*::before,
+*::after {
+  /* Prevents element turning blue on tap */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Realtime colors theme */
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4 {
+  display: inline;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+html {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+h1,
+.h1 {
+  font-size: calc(1rem * pow(var(--font-ratio), 4));
+}
+
+h2,
+.h2 {
+  font-size: calc(1rem * pow(var(--font-ratio), 3));
+}
+
+h3,
+.h3 {
+  font-size: calc(1rem * pow(var(--font-ratio), 2));
+}
+
+h4,
+.h4 {
+  font-size: calc(1rem * pow(var(--font-ratio), 1));
+}
+
+small {
+  font-size: calc(1rem / var(--font-ratio));
+}
