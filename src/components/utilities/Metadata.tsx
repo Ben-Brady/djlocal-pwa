@@ -5,7 +5,7 @@ type MetadataProps = {
 };
 
 const Metadata = ({ title }: MetadataProps) => {
-    title ??= "Musicly";
+    title ??= "DJlocal";
 
     return (
         <Helmet>

@@ -1,7 +1,6 @@
 :root {
-    --font-body: "Noto Sans", sans-serif;
-    --font-heading: "Noto Sans, SemiBold", sans-serif;
-    --font-mono: "Fira Mono", monospace;
+    --font-body: "Inria Sans", sans-serif;
+    --font-heading: "Inria Sans, SemiBold", sans-serif;
     --font-ratio: 1.2;
 
     --color-text: #eeecec;

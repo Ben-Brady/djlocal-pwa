@@ -1,28 +1,25 @@
-import {
-    lazy,
-    LocationProvider,
-    ErrorBoundary,
-    Router,
-    Route,
-} from "preact-iso";
+import { lazy, LocationProvider, Router, Route } from "preact-iso";
 import "@/styles/index.css";
 import "@/styles/theme.css";
-import "@fontsource/noto-sans";
+import "@fontsource/inria-sans/300.css";
+import "@fontsource/inria-sans/400.css";
+import "@fontsource/inria-sans/700.css";
+import Layout from "./components/utilities/Layout";
+import { PlayContextProvder } from "./context/playContext";
 
-const Home = lazy(() => import("@/routes/index"));
+const LibraryPage = lazy(() => import("@/routes/index"));
+const SongPage = lazy(() => import("@/routes/song/index"));
 
 const App = () => (
     <LocationProvider>
-        <ErrorBoundary
-            onError={(error) => {
-                console.error(error);
-                location.href = "/";
-            }}
-        >
-            <Router>
-                <Route path="/" default component={Home} />
-            </Router>
-        </ErrorBoundary>
+        <PlayContextProvder>
+            <Layout>
+                <Router>
+                    <Route path="/" default component={LibraryPage} />
+                    <Route path="/song/:id" default component={SongPage} />
+                </Router>
+            </Layout>
+        </PlayContextProvder>
     </LocationProvider>
 );
 

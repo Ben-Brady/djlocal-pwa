@@ -1,9 +1,16 @@
-// size-screen
-
 import plugin from "tailwindcss/plugin";
 
 export const utilitiesPlugin = () =>
-    plugin(function ({ addUtilities }) {
+    plugin(function ({ addUtilities, matchUtilities, theme }) {
+        matchUtilities(
+            {
+                ".template-cols": (value) => ({
+                    tabSize: value,
+                }),
+            },
+            { values: theme("sizing") },
+        );
+
         addUtilities({
             ".flex-center": {
                 display: "flex",
@@ -24,7 +31,7 @@ export const utilitiesPlugin = () =>
             },
             ".size-screen": {
                 width: "100dvw",
-                height: "100dvh",
+                height: "100d",
             },
         });
     });
