@@ -57,7 +57,6 @@ export const createSong = async (file: File): Promise<SongMetadata> => {
     const mimetype = file.type;
     const duration = await getDuration(data);
     const song = { id, title, mimetype, duration } satisfies SongMetadata;
-    console.log(song);
 
     await saveSong(song, data);
     return song;
@@ -67,7 +66,6 @@ const getDuration = async (data: Blob): Promise<number> => {
     const audio = new Audio(URL.createObjectURL(data));
     return new Promise((resolve) => {
         audio.onloadedmetadata = () => {
-            console.log(audio.duration);
             resolve(audio.duration);
         };
     });
