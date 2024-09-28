@@ -13,7 +13,6 @@ const randomColor = () =>
 
 const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
     const wsRef = useRef<HTMLDivElement>(null);
-    const [loaded, setLoaded] = useState<boolean>(false);
     const [ws, setWs] = useState<Wavesurfer | undefined>(undefined);
     const [playing, setPlaying] = useState(false);
 
@@ -40,10 +39,6 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
         ws.loadBlob(data);
         regions.enableDragSelection({ color: "rgba(255, 0, 0, 0.1)" });
 
-        regions.on("region-updated", (region) => {
-            console.log("Updated region", region);
-        });
-
         ws.on("play", () => setPlaying(true));
         ws.on("finish", () => setPlaying(false));
         ws.on("pause", () => setPlaying(false));
@@ -53,8 +48,6 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
         });
 
         ws.on("decode", (duration) => {
-            setLoaded(true);
-
             regions.addRegion({
                 start: 0,
                 end: 10,
@@ -103,7 +96,6 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
         });
 
         return () => {
-            setLoaded(false);
             ws.destroy();
             regions.destroy();
         };

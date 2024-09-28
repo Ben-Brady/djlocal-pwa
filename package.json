@@ -28,6 +28,7 @@
     "react-dnd": "^16.0.1",
     "react-helmet": "^6.1.0",
     "textfit": "^2.4.0",
+    "use-debounce": "^10.0.3",
     "wavesurfer.js": "^7.8.6",
     "zod": "^3.23.8"
   },

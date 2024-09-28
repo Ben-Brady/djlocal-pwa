@@ -6,8 +6,8 @@ import MinimizedPlayer from "../extensive/MinimizedPlayer";
 
 const Layout: FC = ({ children }) => {
     return (
-        <div class="grid h-[100dvh] grid-rows-[1fr,48px] overflow-hidden">
-            <div className="relative h-[calc(100dvh-48px)]">{children}<MinimizedPlayer /></div>
+        <div class="grid h-[100dvh] grid-rows-[1fr,64px] overflow-hidden">
+            <div className="relative h-[calc(100dvh-64px)]">{children}<MinimizedPlayer /></div>
 
             <Navbar />
         </div>
@@ -28,11 +28,11 @@ const NavbarIcon: FC<{ href: string; icon: IconProp; text: string }> = ({
     icon,
     text,
 }) => (
-    <a className="size-full flex-col items-center justify-around" href={href}>
-        <div class="size-4">
+    <a className="flex-col items-center justify-end gap-1 py-1.5 size-full" href={href}>
+        <div class="size-5">
             <FontAwesomeIcon icon={icon} className="text-primary" />
         </div>
-        <span class="text-xs">{text}</span>
+        <span class="text-sm">{text}</span>
     </a>
 );
 

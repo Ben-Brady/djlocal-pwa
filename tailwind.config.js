@@ -29,6 +29,10 @@ export default {
                 128: spacing(128),
                 256: spacing(256),
             },
+            transitionDuration: {
+                25: "25ms",
+                50: "50ms",
+            },
         },
     },
     plugins: [utilitiesPlugin()],

@@ -1,7 +1,9 @@
+@import "./utilities.css";
+@import "./theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 :root {
   line-height: 1.5;
@@ -17,6 +19,7 @@
 .svg-inline--fa {
   width: 100% !important;
   height: 100% !important;
+  vertical-align: 0.125em !important;
 }
 
 :root {

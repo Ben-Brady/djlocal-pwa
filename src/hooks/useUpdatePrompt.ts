@@ -26,7 +26,6 @@ export const useUpdatePrompt = (): UpdateCallback | undefined => {
         if (!inPwa && needsUpdate) update();
     }, [inPwa, needsUpdate, update]);
 
-    console.log({ setCanInstall, setNeedsUpdate, canInstall, needsUpdate });
 
     return shouldUpdate ? update : undefined;
 };

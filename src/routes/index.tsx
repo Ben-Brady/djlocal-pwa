@@ -5,10 +5,12 @@ import PlaylistEntry from "@/components/extensive/PlaylistEntry";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useFileUpload } from "@/hooks/useFileUpload";
 import HeaderButton from "@/components/extensive/HeaderButton";
+import { useMusicContext } from "@/context/MusicContext";
 
 const LibraryPage: FC = () => {
     const [songs, setSongs] = useState<SongMetadata[]>(listSongs);
     const { UploadElement, uploadFiles } = useFileUpload();
+    const { controls } = useMusicContext();
 
     const uploadSongs = async () => {
         const files = await uploadFiles({
@@ -43,7 +45,12 @@ const LibraryPage: FC = () => {
             <div class="h-0.5 w-full bg-accent" />
             <div class="flex-col gap-2 overflow-auto">
                 {songs.map((song) => (
-                    <PlaylistEntry song={song} onClick={console.log} />
+                    <PlaylistEntry
+                        song={song}
+                        onClick={() => {
+                            controls.playSong(song);
+                        }}
+                    />
                 ))}
                 <div class="pb-24" />
             </div>
