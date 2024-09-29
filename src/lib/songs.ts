@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { compress, decompress } from "./compress";
+import { randomHex } from "./random";
 
 const SongMetadata = z.object({
     id: z.string(),
@@ -43,11 +44,6 @@ export const loadSongData = async (id: string): Promise<Blob | null> => {
     const blob = new Blob([file]);
     return await decompress(blob);
 };
-
-const randomHex = (length: number) =>
-    Math.round(Math.random() * 2 ** (4 * length))
-        .toString(16)
-        .padStart(length, "0");
 
 export const createSong = async (file: File): Promise<SongMetadata> => {
     const data = new Blob([file]);
