@@ -8,6 +8,7 @@
     "dev:https": "vite --host & local-ssl-proxy --source 8000 --target 5173 --hostname 0.0.0.0",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "lint": "eslint",
     "start": "tsc && vite build && vite preview",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 src/assets/images/favicon.svg"
   },
@@ -33,12 +34,15 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@preact/preset-vite": "^2.9.1",
     "@types/lodash": "^4.17.7",
     "@types/node": "^22.5.5",
     "@types/react-helmet": "^6.1.11",
     "@vite-pwa/assets-generator": "^0.2.6",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react": "^7.37.0",
     "globals": "^15.9.0",
     "postcss": "^8.4.47",
     "prettier": "3.3.3",
@@ -46,6 +50,7 @@
     "tailwind": "^4.0.0",
     "tailwindcss": "^3.4.12",
     "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0",
     "vite": "^5.4.6",
     "vite-plugin-pwa": "^0.20.5"
   },

@@ -1,7 +1,6 @@
 import { utilitiesPlugin } from "./src/styles/plugins/utilities";
 
 const spacing = (number) => `${number / 4}rem`;
-const shadowColor = "";
 
 /** @type {import('tailwindcss').Config} */
 export default {

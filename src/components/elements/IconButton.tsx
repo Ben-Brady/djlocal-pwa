@@ -7,19 +7,17 @@ const IconButton: FC<{
     class: string;
     icon: IconProp;
     onClick?: () => void;
-}> = ({ class: className, icon, onClick }) => {
-    return (
-        <div
-            role="button"
-            className={classNames("aspect-square", className)}
-            onClick={(ev) => {
-                ev.preventDefault();
-                onClick?.();
-            }}
-        >
-            <FontAwesomeIcon icon={icon} />
-        </div>
-    );
-};
+}> = ({ class: className, icon, onClick }) => (
+    <div
+        role="button"
+        className={classNames("aspect-square", className)}
+        onClick={(ev) => {
+            ev.stopPropagation();
+            onClick?.();
+        }}
+    >
+        <FontAwesomeIcon icon={icon} />
+    </div>
+);
 
 export default IconButton;

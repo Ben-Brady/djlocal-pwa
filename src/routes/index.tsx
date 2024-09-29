@@ -29,17 +29,13 @@ const LibraryPage: FC = () => {
         <div class="h-full flex-col gap-2 p-4 pb-0">
             <UploadElement />
             <div class="min-h-32 w-full flex-col justify-between p-4">
-                <div className="flex items-center gap-1">
+                <div class="flex items-center gap-1">
                     <span class="text-2xl font-bold">Library •</span>
                     <span>{songs.length} Songs</span>
                 </div>
 
                 <div class="flex-row gap-4">
-                    <HeaderButton
-                        icon={faUpload}
-                        text="Upload"
-                        onClick={uploadSongs}
-                    />
+                    <HeaderButton icon={faUpload} text="Upload" onClick={uploadSongs} />
                 </div>
             </div>
             <div class="h-0.5 w-full bg-accent" />
@@ -47,6 +43,7 @@ const LibraryPage: FC = () => {
                 {songs.map((song) => (
                     <PlaylistEntry
                         song={song}
+                        key={song.id}
                         onClick={() => {
                             controls.playSong(song);
                         }}

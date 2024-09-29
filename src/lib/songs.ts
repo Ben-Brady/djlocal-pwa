@@ -34,7 +34,7 @@ export const loadSongData = async (id: string): Promise<Blob | null> => {
     const fileHandle = await (async () => {
         try {
             return await root.getFileHandle(id);
-        } catch (err: unknown) {
+        } catch {
             return null;
         }
     })();
@@ -68,17 +68,14 @@ const getDuration = async (data: Blob): Promise<number> => {
 };
 
 export const editSongTitle = async (id: string, newTitle: string) => {
-    const songs = listSongs();
+    let songs = listSongs();
     let song = songs.find((song) => song.id === id);
     if (song) song.title = newTitle;
 
     setSongs(songs);
 };
 
-export const saveSong = async (
-    song: SongMetadata,
-    data: Blob,
-): Promise<void> => {
+export const saveSong = async (song: SongMetadata, data: Blob): Promise<void> => {
     const compressedData = await compress(data);
     const root = await navigator.storage.getDirectory();
     const fileHandle = await root.getFileHandle(song.id, { create: true });

@@ -1,6 +1,5 @@
 import { SongMetadata } from "@/lib/songs";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "preact/compat";
 import IconButton from "../elements/IconButton";
 
