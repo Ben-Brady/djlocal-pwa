@@ -30,8 +30,8 @@ export const utilitiesPlugin = () =>
                 height: "var(--card-height)",
             },
             ".size-screen": {
-                width: "100dvw",
-                height: "100d",
+                width: "100vw",
+                height: "100vh",
             },
         });
     });

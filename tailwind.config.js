@@ -1,6 +1,6 @@
 import { utilitiesPlugin } from "./src/styles/plugins/utilities";
 
-const spacing = (number) => `${number / 4}rem`;
+const spacing = number => `${number / 4}rem`;
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -27,6 +27,12 @@ export default {
             spacing: {
                 128: spacing(128),
                 256: spacing(256),
+            },
+            width: {
+                screen: "100dvw",
+            },
+            height: {
+                screen: "100dvh",
             },
             transitionDuration: {
                 25: "25ms",

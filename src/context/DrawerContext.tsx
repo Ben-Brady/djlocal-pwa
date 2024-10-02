@@ -58,9 +58,13 @@ export const [DrawerProvider, useDrawer] = createBasicContext<DrawerHook>("Drawe
         hook: { openSongDrawer },
         children: (
             <div
-                class={classNames("absolute inset-0 bg-black/70 size-screen", {
-                    hidden: !open,
-                })}
+                class={classNames(
+                    "absolute inset-0 overflow-hidden bg-black/70 transition-all size-screen",
+                    {
+                        "block opacity-100": open,
+                        "pointer-events-none touch-none opacity-0": !open,
+                    },
+                )}
                 onClick={() => {
                     setOpen(false);
                 }}
@@ -82,7 +86,7 @@ const Drawer: FC<{
                 "absolute bottom-0 left-0 w-full flex-col bg-tertiary transition-all",
                 {
                     "h-fit": open,
-                    "h-0": !open,
+                    "h-0 translate-y-full": !open,
                 },
             )}
         >
