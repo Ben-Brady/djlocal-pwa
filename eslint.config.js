@@ -3,7 +3,6 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 
-
 /** @type { import("eslint").Linter.Config[] } */
 export default [
     { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
@@ -14,14 +13,14 @@ export default [
     {
         settings: {
             react: {
-                version: "detect", // React version. "detect" automatically picks the version you have installed.
+                version: "detect",
             },
         },
         rules: {
             "react/react-in-jsx-scope": "off",
             "react/no-unknown-property": "off",
-            "prefer-const": "off",
             "react/prop-types": "off",
+            "prefer-const": "off",
         },
     },
 ];

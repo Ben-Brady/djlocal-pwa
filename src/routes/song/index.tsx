@@ -1,5 +1,4 @@
 import { FC } from "@/types/FC";
-import Song from "@/components/extensive/Song";
 import { getSong, loadSongData } from "@/lib/songs";
 import { useLocation } from "preact-iso";
 import { useEffect, useState } from "preact/hooks";
@@ -28,9 +27,7 @@ const SongPage: FC<{ params: { id: string } }> = ({ params: { id } }) => {
         <main class="flex-col items-center gap-16">
             <h1>{song.title}</h1>
 
-            <div className="h-16 w-full flex-row px-16">
-                {data && <WaveSurfer data={data} />}
-            </div>
+            <div className="h-16 w-full flex-row px-16">{data && <WaveSurfer data={data} />}</div>
         </main>
     );
 };

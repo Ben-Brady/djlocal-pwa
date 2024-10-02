@@ -1,14 +1,11 @@
-import {  formatSongInfo } from "@/lib/format";
+import { formatSongInfo } from "@/lib/format";
 import { SongMetadata } from "@/lib/songs";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FC } from "preact/compat";
-import IconButton from "../elements/IconButton";
+import IconButton from "@/components/elements/IconButton";
 import { useDrawer } from "@/context/DrawerContext";
 
-const PlaylistEntry: FC<{ song: SongMetadata; onClick: () => void }> = ({
-    song,
-    onClick,
-}) => {
+const PlaylistEntry: FC<{ song: SongMetadata; onClick: () => void }> = ({ song, onClick }) => {
     const { openSongDrawer } = useDrawer();
 
     return (
@@ -23,12 +20,9 @@ const PlaylistEntry: FC<{ song: SongMetadata; onClick: () => void }> = ({
                 <span>{formatSongInfo(song)}</span>
             </div>
 
-            <IconButton
-                class="size-8"
-                onClick={() => openSongDrawer(song)}
-                icon={faEllipsis}
-            />
+            <IconButton class="size-8" onClick={() => openSongDrawer(song)} icon={faEllipsis} />
         </div>
     );
 };
+
 export default PlaylistEntry;

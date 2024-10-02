@@ -1,9 +1,20 @@
+import Song from "@/components/extensive/Song";
 import { useEvent } from "@/hooks/useEvent";
+import {
+    useMediaSessionSong,
+    setMediaSesssionCurrentTime,
+    setMediaSesssionPlaying,
+    useMediaActionHandler,
+    useMediaSession,
+    useMediaSessionPosition,
+    useMediaSessionPlaying,
+} from "@/hooks/useMediaSession";
+import { setPlayerVolume, usePlayerVolume } from "@/hooks/usePlayerVolume";
 import { createBasicContext } from "@/lib/context";
 
 import { loadSongData, SongMetadata } from "@/lib/songs";
 import { clamp } from "lodash";
-import { useCallback, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { useDebounce } from "use-debounce";
 
 export type Playing = {
@@ -38,7 +49,6 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     const [isPlaying, setIsPlaying] = useState<boolean>(true);
     const [isMuted, setIsMuted] = useState<boolean>(false);
     const [queue, setQueue] = useState<SongMetadata[]>(() => []);
-    const [volume, setVolume] = useState<number>(1);
     const [rawCurrentTime, setRawCurrentTime] = useState<number | undefined>();
     const [currentTime] = useDebounce(rawCurrentTime, 50, {
         leading: true,
@@ -46,18 +56,29 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     const [currentSong, setCurrentSong] = useState<SongMetadata | undefined>();
     const audioRef = useRef<HTMLAudioElement>(null);
 
+    const getAudio = useCallback(() => {
+        const audio = audioRef.current;
+        if (!audio) throw new Error("Audio not yet defined");
+        return audio;
+    }, []);
+
+    const volume = usePlayerVolume();
+    useEffect(() => {
+        const audio = getAudio();
+        audio.volume = volume;
+    }, [volume]);
+
     useEvent(audioRef.current, "pause", () => setIsPlaying(false));
     useEvent(audioRef.current, "play", () => setIsPlaying(true));
     useEvent(audioRef.current, "timeupdate", ({ element }) => {
         setRawCurrentTime(element.currentTime);
         setIsPlaying(true);
         setIsMuted(element.muted);
-        setVolume(element.volume);
     });
 
     useEvent(audioRef.current, "ended", () => setIsPlaying(false));
     useEvent(audioRef.current, "ended", () =>
-        setQueue((queue) => {
+        setQueue(queue => {
             if (queue.length === 0) return [];
             const [nextSong, ...remainingQueue] = queue;
 
@@ -67,72 +88,65 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     );
 
     const play = useCallback(() => {
-        if (!audioRef.current) return;
-        audioRef.current.play();
-        setIsPlaying(true);
+        const audio = getAudio();
+        audio.play();
     }, []);
 
     const pause = useCallback(() => {
-        if (!audioRef.current) return;
-        audioRef.current.pause();
-        setIsPlaying(false);
+        const audio = getAudio();
+        audio.pause();
     }, []);
 
     const seekTo = useCallback(
         (time: number) => {
-            if (!audioRef.current) return;
-            audioRef.current.currentTime = time;
+            const audio = getAudio();
+            audio.currentTime = time;
         },
         [isPlaying],
     );
 
     const mute = useCallback(() => {
-        if (!audioRef.current) return;
-        audioRef.current.muted = true;
+        const audio = getAudio();
+        audio.muted = true;
     }, []);
 
     const unmute = useCallback(() => {
-        if (!audioRef.current) return;
-        audioRef.current.muted = false;
+        const audio = getAudio();
+        audio.muted = false;
     }, []);
 
     const playSong = useCallback(
         async (song: SongMetadata) => {
-            const audio = audioRef.current;
-            if (!audio) throw new Error("IDFK");
-
             setCurrentSong(song);
             const data = await loadSongData(song.id);
             if (!data) throw new Error("IDFK");
 
-            const url = URL.createObjectURL(data);
-            audio.src = url;
+            const audio = getAudio();
+            audio.src = URL.createObjectURL(data);
             audio.play();
             setIsPlaying(true);
         },
         [isPlaying],
     );
 
-    const playNext = useCallback((song: SongMetadata) => setQueue((queue) => [song, ...queue]), []);
-    const addToQueue = useCallback(
-        (song: SongMetadata) => setQueue((queue) => [...queue, song]),
-        [],
-    );
+    const playNext = useCallback((song: SongMetadata) => setQueue(queue => [song, ...queue]), []);
+    const addToQueue = useCallback((song: SongMetadata) => setQueue(queue => [...queue, song]), []);
 
-    const updateVolume = useCallback((volume: number) => {
-        if (!audioRef.current) throw new Error("IDFK");
-        volume = clamp(volume, 0, 1);
-        audioRef.current.volume = volume;
-        setVolume(volume);
-    }, []);
+    useMediaSessionSong(currentSong);
+    useMediaSessionPlaying(isPlaying);
+    useMediaSessionPosition(currentSong, currentTime);
+
+    useMediaActionHandler("play", play);
+    useMediaActionHandler("pause", pause);
+    useMediaActionHandler("seekto", ({ seekTime }) => seekTo(seekTime!));
 
     return {
         hook: {
             playing:
-                currentTime && currentSong ?
+                currentSong ?
                     {
-                        currentTime: currentTime,
                         song: currentSong,
+                        currentTime: currentTime ?? 0,
                     }
                 :   undefined,
             queue,
@@ -148,7 +162,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
                 playSong,
                 mute,
                 unmute,
-                setVolume: updateVolume,
+                setVolume: setPlayerVolume,
             },
         } satisfies PlayState,
         children: <audio ref={audioRef} />,
