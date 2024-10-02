@@ -26,6 +26,8 @@ export type Controls = {
     mute: () => void;
     unmute: () => void;
 
+    stop: () => void;
+    nextTrack: () => void;
     play: () => void;
     pause: () => void;
     seekTo: (percent: number) => void;
@@ -124,6 +126,16 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
         [isPlaying],
     );
 
+    const stop = useCallback(async () => {
+        setQueue([]);
+        setCurrentSong(undefined);
+        setRawCurrentTime(undefined);
+    }, []);
+
+    const nextTrack = useCallback(async () => {
+        setQueue(queue => queue.slice(1));
+    }, []);
+
     const playNext = useCallback((song: SongMetadata) => setQueue(queue => [song, ...queue]), []);
     const addToQueue = useCallback((song: SongMetadata) => setQueue(queue => [...queue, song]), []);
 
@@ -133,6 +145,8 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
 
     useMediaActionHandler("play", play);
     useMediaActionHandler("pause", pause);
+    useMediaActionHandler("nexttrack", nextTrack);
+    useMediaActionHandler("stop", stop);
     useMediaActionHandler("seekto", ({ seekTime }) => seekTo(seekTime!));
 
     return {
@@ -151,6 +165,8 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
             controls: {
                 play,
                 pause,
+                nextTrack,
+                stop,
                 seekTo,
                 playNext,
                 addToQueue,
