@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { compress, decompress } from "./compress";
 import { randomHex } from "./random";
+import { properegateLibraryUpdate } from "@/hooks/useLibrary";
+import { getAudioDuration } from "./audio";
 
 const SongMetadata = z.object({
     id: z.string(),
@@ -12,7 +14,7 @@ const SongMetadata = z.object({
 
 export type SongMetadata = z.infer<typeof SongMetadata>;
 
-export const listSongs = (): SongMetadata[] => {
+export const loadSongs = (): SongMetadata[] => {
     const text = localStorage.getItem("songs") ?? "[]";
     const schema = SongMetadata.array();
     const songs = schema.parse(JSON.parse(text));
@@ -20,12 +22,13 @@ export const listSongs = (): SongMetadata[] => {
 };
 
 export const getSong = (id: string): SongMetadata | undefined => {
-    const songs = listSongs();
-    return songs.find((song) => song.id === id);
+    const songs = loadSongs();
+    return songs.find(song => song.id === id);
 };
 
 const setSongs = (songs: SongMetadata[]) => {
     localStorage.setItem("songs", JSON.stringify(songs));
+    properegateLibraryUpdate();
 };
 
 export const loadSongData = async (id: string): Promise<Blob | null> => {
@@ -51,25 +54,16 @@ export const createSong = async (file: File): Promise<SongMetadata> => {
     const id = randomHex(8);
     const title = file.name.split(".")[0];
     const mimetype = file.type;
-    const duration = await getDuration(data);
+    const duration = await getAudioDuration(data);
     const song = { id, title, mimetype, duration } satisfies SongMetadata;
 
     await saveSong(song, data);
     return song;
 };
 
-const getDuration = async (data: Blob): Promise<number> => {
-    const audio = new Audio(URL.createObjectURL(data));
-    return new Promise((resolve) => {
-        audio.onloadedmetadata = () => {
-            resolve(audio.duration);
-        };
-    });
-};
-
 export const editSongTitle = async (id: string, newTitle: string) => {
-    let songs = listSongs();
-    let song = songs.find((song) => song.id === id);
+    let songs = loadSongs();
+    let song = songs.find(song => song.id === id);
     if (song) song.title = newTitle;
 
     setSongs(songs);
@@ -83,7 +77,7 @@ export const saveSong = async (song: SongMetadata, data: Blob): Promise<void> =>
     await fileWriter.write(compressedData);
     await fileWriter.close();
 
-    let songs = listSongs();
+    let songs = loadSongs();
     songs = [...songs, song];
     setSongs(songs);
 };
@@ -92,7 +86,7 @@ export const deleteSong = async (id: string): Promise<void> => {
     const root = await navigator.storage.getDirectory();
     await root.removeEntry(id);
 
-    let songs = await listSongs();
-    songs = songs.filter((song) => song.id !== id);
+    let songs = await loadSongs();
+    songs = songs.filter(song => song.id !== id);
     setSongs(songs);
 };
