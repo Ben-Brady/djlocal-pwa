@@ -28,7 +28,7 @@ export const VolumeButton: FC<{
     const rangeVisible = useMemo(() => hovering || holding, [hovering, holding]);
 
     return (
-        <div ref={containerRef} class="h-full flex-row items-center">
+        <div ref={containerRef} class="hidden h-full items-center sm:flex-row">
             <IconButton icon={icon} class="size-8" onClick={muted ? unmute : mute} />
             <input
                 class={classNames("h-full accent-accent transition-all", {
