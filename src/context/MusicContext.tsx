@@ -9,7 +9,7 @@ import { setPlayerVolume, usePlayerVolume } from "@/hooks/usePlayerVolume";
 import { createBasicContext } from "@/lib/context";
 
 import { loadSongData, SongMetadata } from "@/lib/songs";
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { useDebounce } from "use-debounce";
 
 export type Playing = {
@@ -27,6 +27,7 @@ export type Controls = {
     unmute: () => void;
 
     stop: () => void;
+    previousTrack: () => void;
     nextTrack: () => void;
     play: () => void;
     pause: () => void;
@@ -50,7 +51,8 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     const [currentTime] = useDebounce(rawCurrentTime, 50, {
         leading: true,
     });
-    const [currentSong, setCurrentSong] = useState<SongMetadata | undefined>();
+    const currentSong = useMemo(() => queue[0], [queue]);
+
     const audioRef = useRef<HTMLAudioElement>(null);
 
     const getAudio = useCallback(() => {
@@ -114,7 +116,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
 
     const playSong = useCallback(
         async (song: SongMetadata) => {
-            setCurrentSong(song);
+            setQueue(queue => [song, ...queue]);
             const data = await loadSongData(song.id);
             if (!data) throw new Error("IDFK");
 
@@ -128,13 +130,14 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
 
     const stop = useCallback(async () => {
         setQueue([]);
-        setCurrentSong(undefined);
         setRawCurrentTime(undefined);
     }, []);
 
     const nextTrack = useCallback(async () => {
         setQueue(queue => queue.slice(1));
     }, []);
+
+    const previousTrack = useCallback(async () => {}, []);
 
     const playNext = useCallback((song: SongMetadata) => setQueue(queue => [song, ...queue]), []);
     const addToQueue = useCallback((song: SongMetadata) => setQueue(queue => [...queue, song]), []);
@@ -146,6 +149,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     useMediaActionHandler("play", play);
     useMediaActionHandler("pause", pause);
     useMediaActionHandler("nexttrack", nextTrack);
+    useMediaActionHandler("previoustrack", previousTrack);
     useMediaActionHandler("stop", stop);
     useMediaActionHandler("seekto", ({ seekTime }) => seekTo(seekTime!));
 
@@ -165,6 +169,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
             controls: {
                 play,
                 pause,
+                previousTrack,
                 nextTrack,
                 stop,
                 seekTo,

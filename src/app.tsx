@@ -6,6 +6,7 @@ import "@fontsource/inria-sans/700.css";
 import Layout from "./components/utilities/Layout";
 import { MusicProvder } from "./context/MusicContext";
 import { DrawerProvider } from "./context/DrawerContext";
+import QueuePage from "./routes/queue";
 
 const LibraryPage = lazy(() => import("@/routes/index"));
 const SongPage = lazy(() => import("@/routes/song/index"));
@@ -17,6 +18,7 @@ const App = () => (
                 <Layout>
                     <Router>
                         <Route path="/" default component={LibraryPage} />
+                        <Route path="/queue" default component={QueuePage} />
                         <Route path="/song/:id" default component={SongPage} />
                     </Router>
                 </Layout>

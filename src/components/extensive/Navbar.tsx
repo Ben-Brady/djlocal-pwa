@@ -18,7 +18,7 @@ const Navbar: FC = () => {
         <footer class="w-full border-t-2 border-t-background bg-tertiary flex-center">
             <nav class="contents">
                 <NavbarIcon icon={faFileAudio} text="Library" href="/" />
-                <NavbarIcon icon={faPlayCircle} text="Queue" href="/" />
+                <NavbarIcon icon={faPlayCircle} text="Queue" href="/queue" />
                 <NavbarIcon icon={faList} text="Playlists" href="/" />
                 {downloadPrompt ?
                     <NavbarIcon icon={faDownload} text="Install" callback={downloadPrompt} />

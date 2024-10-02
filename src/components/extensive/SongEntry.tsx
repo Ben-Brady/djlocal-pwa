@@ -1,12 +1,22 @@
 import { formatSongInfo } from "@/lib/format";
 import { SongMetadata } from "@/lib/songs";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { FC } from "preact/compat";
+import { faAdd, faEllipsis, faGripLines } from "@fortawesome/free-solid-svg-icons";
+import { FC, useMemo } from "preact/compat";
 import IconButton from "@/components/elements/IconButton";
 import { useDrawer } from "@/context/DrawerContext";
 
-const PlaylistEntry: FC<{ song: SongMetadata; onClick: () => void }> = ({ song, onClick }) => {
+const SongEntry: FC<{
+    song: SongMetadata;
+    type: "playlist" | "song" | "add";
+    onClick: () => void;
+}> = ({ song, onClick, type }) => {
     const { openSongDrawer } = useDrawer();
+    const icon = useMemo(() => {
+        if (type === "playlist") return faGripLines;
+        if (type === "song") return faEllipsis;
+        if (type === "add") return faAdd;
+        throw new Error("Invalid type");
+    }, [type]);
 
     return (
         <div
@@ -20,9 +30,9 @@ const PlaylistEntry: FC<{ song: SongMetadata; onClick: () => void }> = ({ song, 
                 <span>{formatSongInfo(song)}</span>
             </div>
 
-            <IconButton class="size-8" onClick={() => openSongDrawer(song)} icon={faEllipsis} />
+            <IconButton class="size-8" onClick={() => openSongDrawer(song)} icon={icon} />
         </div>
     );
 };
 
-export default PlaylistEntry;
+export default SongEntry;
