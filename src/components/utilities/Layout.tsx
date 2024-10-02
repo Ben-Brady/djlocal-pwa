@@ -7,7 +7,7 @@ const Layout: FC = ({ children }) => {
 
     return (
         <div class="grid h-screen grid-rows-[1fr,64px] overflow-hidden">
-            <div className="relative h-[calc(100dvh-64px)]">
+            <div className="relative h-[calc(100dvh-64px)] overflow-hidden">
                 {children}
                 {path !== "/queue" && <MinimizedPlayer />}
             </div>
