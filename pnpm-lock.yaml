@@ -66,6 +66,9 @@ importers:
       wavesurfer.js:
         specifier: ^7.8.6
         version: 7.8.6
+      workbox-window:
+        specifier: ^7.1.0
+        version: 7.1.0
       zod:
         specifier: ^3.23.8
         version: 3.23.8
