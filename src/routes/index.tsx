@@ -1,14 +1,14 @@
 import { FC } from "@/types/FC";
-import { createSong, listSongs, SongMetadata } from "@/lib/songs";
-import { useState } from "preact/hooks";
+import { createSong } from "@/lib/songs";
 import PlaylistEntry from "@/components/extensive/PlaylistEntry";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useFileUpload } from "@/hooks/useFileUpload";
 import HeaderButton from "@/components/extensive/HeaderButton";
 import { useMusicContext } from "@/context/MusicContext";
+import { useLibrary } from "@/hooks/useLibrary";
 
 const LibraryPage: FC = () => {
-    const [songs, setSongs] = useState<SongMetadata[]>(listSongs);
+    const songs = useLibrary();
     const { UploadElement, uploadFiles } = useFileUpload();
     const { controls } = useMusicContext();
 
@@ -17,12 +17,7 @@ const LibraryPage: FC = () => {
             accept: "audio/*",
             multiple: true,
         });
-        await Promise.all(
-            files.map(async (file) => {
-                await createSong(file);
-                setSongs(listSongs());
-            }),
-        );
+        await Promise.all(files.map(createSong));
     };
 
     return (
