@@ -8,7 +8,8 @@ import {
 import { setPlayerVolume, usePlayerVolume } from "@/hooks/usePlayerVolume";
 import { createBasicContext } from "@/lib/context";
 
-import { loadSongData, SongMetadata } from "@/lib/songs";
+import { loadSongData, SongMetadata, loadSongs } from "@/lib/songs";
+import { clamp, shuffle } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { useDebounce } from "use-debounce";
 
@@ -26,6 +27,7 @@ export type Controls = {
     mute: () => void;
     unmute: () => void;
 
+    moveSongPosition: (source: number, destination: number) => void;
     stop: () => void;
     previousTrack: () => void;
     nextTrack: () => void;
@@ -51,7 +53,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     const [currentTime] = useDebounce(rawCurrentTime, 50, {
         leading: true,
     });
-    const currentSong = useMemo(() => queue[0], [queue]);
+    const currentSong = useMemo(() => queue[0] as SongMetadata | undefined, [queue]);
 
     const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -66,6 +68,18 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
         const audio = getAudio();
         audio.volume = volume;
     }, [volume]);
+
+    useEffect(() => {
+        (async () => {
+            if (!currentSong) return;
+            const data = await loadSongData(currentSong.id);
+            if (!data) throw new Error("IDFK");
+
+            const audio = getAudio();
+            audio.src = URL.createObjectURL(data);
+            if (isPlaying) audio.play();
+        })();
+    }, [isPlaying, currentSong]);
 
     useEvent(audioRef.current, "pause", () => setIsPlaying(false));
     useEvent(audioRef.current, "play", () => setIsPlaying(true));
@@ -96,13 +110,10 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
         audio.pause();
     }, []);
 
-    const seekTo = useCallback(
-        (time: number) => {
-            const audio = getAudio();
-            audio.currentTime = time;
-        },
-        [isPlaying],
-    );
+    const seekTo = useCallback((time: number) => {
+        const audio = getAudio();
+        audio.currentTime = time;
+    }, []);
 
     const mute = useCallback(() => {
         const audio = getAudio();
@@ -114,19 +125,10 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
         audio.muted = false;
     }, []);
 
-    const playSong = useCallback(
-        async (song: SongMetadata) => {
-            setQueue(queue => [song, ...queue]);
-            const data = await loadSongData(song.id);
-            if (!data) throw new Error("IDFK");
-
-            const audio = getAudio();
-            audio.src = URL.createObjectURL(data);
-            audio.play();
-            setIsPlaying(true);
-        },
-        [isPlaying],
-    );
+    const playSong = useCallback(async (song: SongMetadata) => {
+        setQueue(queue => [song, ...queue]);
+        setIsPlaying(true);
+    }, []);
 
     const stop = useCallback(async () => {
         setQueue([]);
@@ -136,6 +138,16 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     const nextTrack = useCallback(async () => {
         setQueue(queue => queue.slice(1));
     }, []);
+
+    const moveSongPosition = useCallback(
+        (source: number, destination: number) => {
+            const items = [...queue];
+            const [reorderedItem] = items.splice(source, 1);
+            items.splice(destination, 0, reorderedItem);
+            setQueue(items);
+        },
+        [queue],
+    );
 
     const previousTrack = useCallback(async () => {}, []);
 
@@ -152,6 +164,16 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     useMediaActionHandler("previoustrack", previousTrack);
     useMediaActionHandler("stop", stop);
     useMediaActionHandler("seekto", ({ seekTime }) => seekTo(seekTime!));
+    useMediaActionHandler("seekforward", ({ seekOffset }) => {
+        const audio = getAudio();
+        const targetTime = clamp(audio.currentTime + seekOffset!, 0, audio.duration);
+        seekTo(targetTime);
+    });
+    useMediaActionHandler("seekbackward", ({ seekOffset }) => {
+        const audio = getAudio();
+        const targetTime = clamp(audio.currentTime + seekOffset!, 0, audio.duration);
+        seekTo(targetTime);
+    });
 
     return {
         hook: {
@@ -169,13 +191,16 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
             controls: {
                 play,
                 pause,
-                previousTrack,
-                nextTrack,
                 stop,
                 seekTo,
+                previousTrack,
+                nextTrack,
+                moveSongPosition,
+
+                playSong,
                 playNext,
                 addToQueue,
-                playSong,
+
                 mute,
                 unmute,
                 setVolume: setPlayerVolume,

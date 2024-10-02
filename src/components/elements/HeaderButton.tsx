@@ -9,7 +9,7 @@ const HeaderButton: FC<{
 }> = ({ icon, text, onClick }) => {
     return (
         <div
-            class="h-8 w-1/2 max-w-80 flex-row gap-3 bg-secondary font-bold flex-center"
+            class="h-8 w-1/2 max-w-80 flex-row gap-3 bg-secondary flex-center text-button"
             role="button"
             onClick={onClick}
         >

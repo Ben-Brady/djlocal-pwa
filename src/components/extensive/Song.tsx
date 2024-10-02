@@ -8,7 +8,7 @@ const Song: FC<{
     onDelete: () => void;
 }> = ({ song, onDelete }) => {
     return (
-        <div class="h-16 flex-row items-center gap-1" key={song.id}>
+        <div class="h-16 flex-row items-center gap-1">
             <div class="w-64">
                 <a class="w-full text-right" href={`/song/${song.id}`}>
                     {song.title}

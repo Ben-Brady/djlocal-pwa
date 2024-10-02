@@ -47,11 +47,11 @@ const MinimizedPlayer: FC = () => {
                     muted={isMuted}
                 />
                 <div class="w-full flex-col text-wrap break-all">
-                    <span class="font-bold">
+                    <span class="text-small-bold">
                         {song.title}
                         {song.artist && ` • ${song.artist}`}
                     </span>
-                    <span class="capitalize">
+                    <span class="text-small uppercase">
                         {formatDuration(currentTime)} / {formatDuration(song.duration)}
                     </span>
                 </div>

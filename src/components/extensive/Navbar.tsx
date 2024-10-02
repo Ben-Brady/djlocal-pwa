@@ -48,7 +48,7 @@ const NavbarIcon: FC<{ icon: IconProp; text: string; href?: string; callback?: (
         <div class="size-5">
             <FontAwesomeIcon icon={icon} className="text-primary" />
         </div>
-        <span class="text-sm">{text}</span>
+        <span class="text-small">{text}</span>
     </a>
 );
 

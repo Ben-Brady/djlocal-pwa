@@ -6,9 +6,9 @@ import "@fontsource/inria-sans/700.css";
 import Layout from "./components/utilities/Layout";
 import { MusicProvder } from "./context/MusicContext";
 import { DrawerProvider } from "./context/DrawerContext";
-import QueuePage from "./routes/queue";
 
 const LibraryPage = lazy(() => import("@/routes/index"));
+const QueuePage = lazy(() => import("@/routes/queue"));
 const SongPage = lazy(() => import("@/routes/song/index"));
 
 const App = () => (
