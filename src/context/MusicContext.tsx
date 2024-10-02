@@ -69,7 +69,7 @@ export const [MusicProvder, useMusicContext] = createBasicContext<PlayState>("Mu
     useEvent(audioRef.current, "play", () => setIsPlaying(true));
     useEvent(audioRef.current, "timeupdate", ({ element }) => {
         setRawCurrentTime(element.currentTime);
-        setIsPlaying(true);
+        setIsPlaying(!element.paused);
         setIsMuted(element.muted);
     });
 
