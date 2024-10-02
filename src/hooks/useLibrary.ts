@@ -1,4 +1,4 @@
 import { loadSongs } from "@/lib/songs";
-import { createExternalState } from "@/lib/store";
+import { createExternalState } from "@/lib/state";
 
-export const [useLibrary, properegateLibraryUpdate] = createExternalState(() => loadSongs() );
+export const [useLibrary, properegateLibraryUpdate] = createExternalState(() => loadSongs());
