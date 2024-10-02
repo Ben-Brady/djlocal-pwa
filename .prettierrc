@@ -1,6 +1,6 @@
 {
     "jsxSingleQuote": false,
-    "arrowParens": "always",
+    "arrowParens": "avoid",
     "tabWidth": 4,
     "printWidth": 100,
     "experimentalTernaries": true,
