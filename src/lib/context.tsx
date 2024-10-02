@@ -1,8 +1,8 @@
 import { createContext, FC, ReactNode, useContext } from "react";
 
 export const createBasicContext = <
-    TContext extends any = any,
-    TInput extends Record<string, any> = Record<string, any>,
+    TContext = unknown,
+    TInput extends Record<string, unknown> = Record<string, unknown>,
 >(
     name: string,
     transform: (input: TInput) => {

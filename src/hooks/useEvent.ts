@@ -11,11 +11,11 @@ export const useEvent = <
     callback: (options: {
         event: HTMLElementEventMap[TEvent];
         element: TElement;
-    }) => any,
+    }) => unknown,
 ) => {
     useEffect(() => {
         if (!element) return;
-    
+
         const eventCallback = (ev: HTMLElementEventMap[TEvent]) =>
             callback({ event: ev, element });
 
