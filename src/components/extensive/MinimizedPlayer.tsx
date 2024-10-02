@@ -33,7 +33,7 @@ const MinimizedPlayer: FC = () => {
                     }}
                 />
             </div>
-            <div class="h-16 flex-row items-center gap-4 p-4">
+            <div class="h-20 flex-row items-center gap-4 p-4 sm:h-16">
                 <IconButton
                     class="size-8"
                     icon={isPaused ? faPlay : faPause}
