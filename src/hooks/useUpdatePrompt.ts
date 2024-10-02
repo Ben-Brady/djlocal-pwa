@@ -17,6 +17,7 @@ export const useUpdatePrompt = (): UpdateCallback | undefined => {
         updateServiceWorker(true);
         setCanInstall(false);
         setNeedsUpdate(false);
+        location.reload();
     }, [updateServiceWorker, setCanInstall, setNeedsUpdate]);
 
     useEffect(() => {
