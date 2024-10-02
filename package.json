@@ -19,10 +19,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@types/textfit": "^2.4.5",
     "@wavesurfer/react": "^1.0.7",
     "classnames": "^2.5.1",
-    "eslint-plugin-react-hooks": "^4.6.2",
     "local-ssl-proxy": "^2.0.5",
     "lodash": "^4.17.21",
     "preact": "^10.24.1",
@@ -42,10 +40,12 @@
     "@types/lodash": "^4.17.9",
     "@types/node": "^22.7.4",
     "@types/react-helmet": "^6.1.11",
+    "@types/textfit": "^2.4.5",
     "@vite-pwa/assets-generator": "^0.2.6",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.11.1",
     "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^15.10.0",
     "postcss": "^8.4.47",
     "prettier": "3.3.3",
@@ -61,5 +61,5 @@
     "sharp": "0.32.6",
     "sharp-ico": "0.1.5"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276"
 }
