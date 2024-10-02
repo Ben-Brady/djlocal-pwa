@@ -1,4 +1,5 @@
 import { utilitiesPlugin } from "./src/styles/plugins/utilities";
+import { typographyPlugin } from "./src/styles/plugins/typography";
 
 const spacing = number => `${number / 4}rem`;
 
@@ -40,5 +41,5 @@ export default {
             },
         },
     },
-    plugins: [utilitiesPlugin()],
+    plugins: [utilitiesPlugin(), typographyPlugin()],
 };
