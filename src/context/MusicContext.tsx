@@ -1,11 +1,7 @@
-import Song from "@/components/extensive/Song";
 import { useEvent } from "@/hooks/useEvent";
 import {
     useMediaSessionSong,
-    setMediaSesssionCurrentTime,
-    setMediaSesssionPlaying,
     useMediaActionHandler,
-    useMediaSession,
     useMediaSessionPosition,
     useMediaSessionPlaying,
 } from "@/hooks/useMediaSession";
@@ -13,8 +9,7 @@ import { setPlayerVolume, usePlayerVolume } from "@/hooks/usePlayerVolume";
 import { createBasicContext } from "@/lib/context";
 
 import { loadSongData, SongMetadata } from "@/lib/songs";
-import { clamp } from "lodash";
-import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import { useDebounce } from "use-debounce";
 
 export type Playing = {
