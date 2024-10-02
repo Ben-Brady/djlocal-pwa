@@ -1,7 +1,7 @@
 import { FC } from "@/types/FC";
 import IconButton from "./IconButton";
 import { faVolumeHigh, faVolumeLow, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
-import { useMemo, useRef } from "preact/hooks";
+import { useMemo, useRef, useState } from "preact/hooks";
 import { useHover } from "@/hooks/useHover";
 import { useHolding } from "@/hooks/useHolding";
 import classNames from "classnames";
@@ -15,6 +15,7 @@ export const VolumeButton: FC<{
 }> = ({ volume, muted, setVolume, mute, unmute }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const rangeRef = useRef<HTMLInputElement>(null);
+    const [rangeVolume, setRangeVolume] = useState<number>(volume);
 
     const icon = useMemo(() => {
         if (muted || volume === 0) return faVolumeMute;
@@ -24,14 +25,14 @@ export const VolumeButton: FC<{
 
     const hovering = useHover(containerRef.current);
     const holding = useHolding(rangeRef.current);
-
     const rangeVisible = useMemo(() => hovering || holding, [hovering, holding]);
+
     return (
-        <div ref={containerRef} class="flex-row items-center gap-4 pr-2">
+        <div ref={containerRef} class="h-full flex-row items-center">
             <IconButton icon={icon} class="size-8" onClick={muted ? unmute : mute} />
             <input
                 class={classNames("h-full accent-accent transition-all", {
-                    "w-24": rangeVisible,
+                    "ml-4 w-24": rangeVisible,
                     "w-0 opacity-0": !rangeVisible,
                 })}
                 name="volume"
@@ -41,10 +42,12 @@ export const VolumeButton: FC<{
                 min={0}
                 step={0.01}
                 max={1}
-                value={Math.cbrt(volume)}
+                value={Math.cbrt(rangeVolume)}
                 onChange={ev => {
                     const percent = parseFloat(ev.currentTarget.value);
-                    setVolume(percent ** 3);
+                    const volume = percent ** 3;
+                    setVolume(volume);
+                    setRangeVolume(volume);
                 }}
             />
         </div>

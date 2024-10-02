@@ -5,6 +5,7 @@ import { useDrawer } from "../../context/DrawerContext";
 import { FC } from "@/types/FC";
 import { formatDuration } from "@/lib/format";
 import { VolumeButton } from "../elements/VolumeButton";
+import { setPlayerVolume } from "@/hooks/usePlayerVolume";
 
 const MinimizedPlayer: FC = () => {
     const { playing, controls, isPaused, isMuted, volume } = useMusicContext();
@@ -41,7 +42,7 @@ const MinimizedPlayer: FC = () => {
                 <VolumeButton
                     mute={controls.mute}
                     unmute={controls.unmute}
-                    setVolume={controls.setVolume}
+                    setVolume={volume => setPlayerVolume(volume)}
                     volume={volume}
                     muted={isMuted}
                 />
