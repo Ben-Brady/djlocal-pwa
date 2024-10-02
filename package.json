@@ -10,7 +10,6 @@
     "preview": "vite preview",
     "start": "tsc && vite build && vite preview",
     "lint": "eslint",
-    "build": "tsc && vite build",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 src/assets/images/favicon.svg"
   },
   "dependencies": {
