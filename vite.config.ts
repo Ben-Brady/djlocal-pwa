@@ -20,10 +20,10 @@ export default defineConfig({
             },
 
             manifest: {
-                name: "TODO",
-                short_name: "TODO",
-                description: "TODO",
-                theme_color: "TODO",
+                name: "DJLocal",
+                short_name: "DJLocal",
+                description: "A music app for setting up queues and transitions",
+                theme_color: "#8A1212",
                 icons: [
                     {
                         src: "apple-touch-icon-180x180.png",
