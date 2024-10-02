@@ -8,8 +8,8 @@ import {
 import { setPlayerVolume, usePlayerVolume } from "@/hooks/usePlayerVolume";
 import { createBasicContext } from "@/lib/context";
 
-import { loadSongData, SongMetadata, loadSongs } from "@/lib/songs";
-import { clamp, shuffle } from "lodash";
+import { loadSongData, SongMetadata } from "@/lib/songs";
+import { clamp, } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { useDebounce } from "use-debounce";
 

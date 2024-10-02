@@ -1,5 +1,4 @@
 import { FC } from "@/types/FC";
-import SongEntry from "@/components/extensive/SongEntry";
 import { useMusicContext } from "@/context/MusicContext";
 import { formatSongInfo } from "@/lib/format";
 import IconButton from "@/components/elements/IconButton";
@@ -12,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/components/utilities/Header";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import QueueEntry from "@/components/extensive/QueueEntry";
 import OrderableSongList from "@/components/extensive/OrderableSongList";
 
 const QueuePage: FC = () => {

@@ -1,7 +1,7 @@
 import { formatSongInfo } from "@/lib/format";
 import { SongMetadata } from "@/lib/songs";
 import { faAdd, faEllipsis, faGripLines } from "@fortawesome/free-solid-svg-icons";
-import { FC, useId, useMemo } from "preact/compat";
+import { FC, useMemo } from "preact/compat";
 import IconButton from "@/components/elements/IconButton";
 import { useDrawer } from "@/context/DrawerContext";
 
