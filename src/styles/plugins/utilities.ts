@@ -4,7 +4,7 @@ export const utilitiesPlugin = () =>
     plugin(function ({ addUtilities, matchUtilities, theme }) {
         matchUtilities(
             {
-                ".template-cols": (value) => ({
+                ".template-cols": value => ({
                     tabSize: value,
                 }),
             },

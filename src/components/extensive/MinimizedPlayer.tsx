@@ -17,7 +17,7 @@ const MinimizedPlayer: FC = () => {
         <div class="absolute bottom-0 left-0 w-full flex-col bg-tertiary">
             <div
                 class="relative min-h-1 w-full cursor-pointer flex-row bg-black transition-all hover:min-h-2"
-                onMouseDown={(ev) => {
+                onMouseDown={ev => {
                     const width = ev.currentTarget.clientWidth;
                     const x = ev.layerX;
                     const percent = x / width;

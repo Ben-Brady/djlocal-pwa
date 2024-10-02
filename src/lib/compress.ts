@@ -1,6 +1,4 @@
-const streamToBuffer = async (
-    stream: ReadableStream<Uint8Array>,
-): Promise<ArrayBuffer> => {
+const streamToBuffer = async (stream: ReadableStream<Uint8Array>): Promise<ArrayBuffer> => {
     return await new Response(stream).arrayBuffer();
 };
 

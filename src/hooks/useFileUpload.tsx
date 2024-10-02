@@ -1,10 +1,7 @@
 import { FC } from "preact/compat";
 import { useCallback, useRef } from "preact/hooks";
 
-type PromptFileUpload = (options: {
-    accept?: string;
-    multiple?: boolean;
-}) => Promise<File[]>;
+type PromptFileUpload = (options: { accept?: string; multiple?: boolean }) => Promise<File[]>;
 
 export const useFileUpload = (): {
     UploadElement: FC;
@@ -15,14 +12,13 @@ export const useFileUpload = (): {
     const uploadFiles = useCallback<PromptFileUpload>(
         ({ accept = "", multiple }): Promise<File[]> => {
             const input = inputRef.current;
-            if (!input)
-                throw new Error("useFileUpload input Element not bound");
+            if (!input) throw new Error("useFileUpload input Element not bound");
 
             input.accept = accept;
             input.multiple = !!multiple;
 
             input.click();
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 input.onchange = () => resolve([...(input.files ?? [])]);
             });
         },

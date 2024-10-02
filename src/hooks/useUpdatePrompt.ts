@@ -11,10 +11,7 @@ export const useUpdatePrompt = (): UpdateCallback | undefined => {
     const [canInstall, setCanInstall] = offlineReady;
     const [needsUpdate, setNeedsUpdate] = needRefresh;
 
-    const shouldUpdate = useMemo(
-        () => !canInstall && needsUpdate,
-        [canInstall, needsUpdate],
-    );
+    const shouldUpdate = useMemo(() => !canInstall && needsUpdate, [canInstall, needsUpdate]);
 
     const update = useCallback(() => {
         updateServiceWorker(true);
@@ -25,7 +22,6 @@ export const useUpdatePrompt = (): UpdateCallback | undefined => {
     useEffect(() => {
         if (!inPwa && needsUpdate) update();
     }, [inPwa, needsUpdate, update]);
-
 
     return shouldUpdate ? update : undefined;
 };

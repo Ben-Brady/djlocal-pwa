@@ -11,7 +11,7 @@ const IconButton: FC<{
     <div
         role="button"
         className={classNames("aspect-square", className)}
-        onClick={(ev) => {
+        onClick={ev => {
             ev.stopPropagation();
             onClick?.();
         }}

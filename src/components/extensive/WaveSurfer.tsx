@@ -1,15 +1,12 @@
 import { FC, useEffect, useRef, useState } from "preact/compat";
-import RegionsPlugin, {
-    type Region,
-} from "wavesurfer.js/dist/plugins/regions.js";
+import RegionsPlugin, { type Region } from "wavesurfer.js/dist/plugins/regions.js";
 import Wavesurfer from "wavesurfer.js";
 import { clamp } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 const random = (min: number, max: number) => Math.random() * (max - min) + min;
-const randomColor = () =>
-    `rgba(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)}, 0.5)`;
+const randomColor = () => `rgba(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)}, 0.5)`;
 
 const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
     const wsRef = useRef<HTMLDivElement>(null);
@@ -47,7 +44,7 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
             ws.play();
         });
 
-        ws.on("decode", (duration) => {
+        ws.on("decode", duration => {
             regions.addRegion({
                 start: 0,
                 end: 10,
@@ -65,14 +62,10 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
             });
         });
 
-        ws.on("timeupdate", (time) => {
+        ws.on("timeupdate", time => {
             const allRegions = regions.getRegions();
-            const fadeInRegion = allRegions.find(
-                (region) => region.id === "fade-in",
-            );
-            const fadeOutRegion = allRegions.find(
-                (region) => region.id === "fade-out",
-            );
+            const fadeInRegion = allRegions.find(region => region.id === "fade-in");
+            const fadeOutRegion = allRegions.find(region => region.id === "fade-out");
 
             const calculateRegionProgress = (region: Region) => {
                 const regionDuration = region.end - region.start;
@@ -91,8 +84,7 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
                 ws.setVolume(1);
             }
 
-            if (fadeOutRegion && time > fadeOutRegion.end && ws.isPlaying())
-                ws.pause();
+            if (fadeOutRegion && time > fadeOutRegion.end && ws.isPlaying()) ws.pause();
         });
 
         return () => {
@@ -108,7 +100,7 @@ const WaveSurfer: FC<{ data: Blob }> = ({ data }) => {
                 class="size-8"
                 role="button"
                 onClick={() => {
-                    setPlaying((playing) => {
+                    setPlaying(playing => {
                         if (playing && ws) ws.pause();
                         if (!playing && ws) ws.play();
                         return !playing;

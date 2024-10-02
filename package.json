@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "start": "tsc && vite build && vite preview",
     "lint": "eslint",
+    "format": "prettier --write src",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 src/assets/images/favicon.svg"
   },
   "dependencies": {

@@ -45,7 +45,7 @@ export const createPlaylist = ({ title }: { title: string }) => {
 export const addSongToPlaylist = (id: string, song: SongMetadata) => {
     const playlists = getPlaylists();
 
-    const playlist = playlists.find((playlist) => playlist.id === id);
+    const playlist = playlists.find(playlist => playlist.id === id);
     if (!playlist) throw new Error("Playlist not found");
     playlist.songs.push(song.id);
 
@@ -54,7 +54,7 @@ export const addSongToPlaylist = (id: string, song: SongMetadata) => {
 
 export const getPlaylist = (id: string): Playlist | undefined => {
     const playlists = getPlaylists();
-    return playlists.find((playlist) => playlist.id === id);
+    return playlists.find(playlist => playlist.id === id);
 };
 
 export const listPlaylists = (): Playlist[] => {

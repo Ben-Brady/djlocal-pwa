@@ -35,7 +35,7 @@ const LibraryPage: FC = () => {
             </div>
             <div class="h-0.5 w-full bg-accent" />
             <div class="flex-col gap-2 overflow-auto">
-                {songs.map((song) => (
+                {songs.map(song => (
                     <PlaylistEntry
                         song={song}
                         key={song.id}

@@ -32,7 +32,7 @@ export const VolumeButton: FC<{
             <input
                 class={classNames("h-full accent-accent transition-all", {
                     "w-24": rangeVisible,
-                    "opacity-0 w-0": !rangeVisible,
+                    "w-0 opacity-0": !rangeVisible,
                 })}
                 name="volume"
                 aria-label="Volume"
@@ -42,7 +42,7 @@ export const VolumeButton: FC<{
                 step={0.01}
                 max={1}
                 value={Math.cbrt(volume)}
-                onChange={(ev) => {
+                onChange={ev => {
                     const percent = parseFloat(ev.currentTarget.value);
                     setVolume(percent ** 3);
                 }}

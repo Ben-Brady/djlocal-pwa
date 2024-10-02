@@ -18,7 +18,7 @@ export const createBasicContext = <
         return data;
     };
 
-    const Provider: FC<{ children: ReactNode } & TInput> = (props) => {
+    const Provider: FC<{ children: ReactNode } & TInput> = props => {
         const { hook, children } = transform(props);
 
         return (

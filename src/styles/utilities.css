@@ -1,14 +1,14 @@
 @layer utilities {
-  .animate-in-width {
-    animation: animation-in-width 200ms forwards cubic-bezier(0.19, 1, 0.22, 1);
-  }
+    .animate-in-width {
+        animation: animation-in-width 200ms forwards cubic-bezier(0.19, 1, 0.22, 1);
+    }
 
-  @keyframes animation-in-width {
-    from {
-      max-width: 0%;
+    @keyframes animation-in-width {
+        from {
+            max-width: 0%;
+        }
+        to {
+            max-width: 100%;
+        }
     }
-    to {
-      max-width: 100%;
-    }
-  }
 }
