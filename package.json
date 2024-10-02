@@ -11,7 +11,7 @@
     "start": "tsc && vite build && vite preview",
     "lint": "eslint",
     "format": "prettier --write src",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 src/assets/images/favicon.svg"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 src/assets/images/favicon.svg && cp src/assets/images/favicon.svg public/favicon.svg && cp src/assets/images/favicon.ico public/favicon.ico"
   },
   "dependencies": {
     "@fontsource/inria-sans": "^5.1.0",
